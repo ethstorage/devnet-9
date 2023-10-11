@@ -21,6 +21,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/math"
+	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/params"
 )
 
@@ -46,9 +47,12 @@ func memoryGasCost(evm *EVM, mem *Memory, newMemSize uint64) (uint64, error) {
 		linCoef := newMemSizeWords * params.MemoryGas
 		quadCoef := square / params.QuadCoeffDiv
 		newTotalFee := linCoef + quadCoef
-		if evm != nil && evm.chainRules.IsEthStorage {
+		if evm != nil && evm.Config.IsEthStorage {
+			log.Info("zhuqiang - memory is expanding and es takes effect")
 			quadCoef = 0
-		}		
+		} else {
+			log.Info("zhuqiang - only memory is expanding")
+		}	
 
 		fee := newTotalFee - mem.lastGasCost
 		mem.lastGasCost = newTotalFee
