@@ -42,13 +42,10 @@ func memoryGasCost(evm *EVM, mem *Memory, newMemSize uint64) (uint64, error) {
 	newMemSize = newMemSizeWords * 32
 
 	if newMemSize > uint64(mem.Len()) {
-		square := newMemSizeWords * newMemSizeWords
 		linCoef := newMemSizeWords * params.MemoryGas
-		quadCoef := square / params.QuadCoeffDiv
-		newTotalFee := linCoef + quadCoef
+		newTotalFee := linCoef
 		// if evm != nil && evm.Config.IsEthStorage {
 		// 	log.Info("zhuqiang - memory is expanding and es takes effect")
-		quadCoef = 0
 		// } else {
 		// 	log.Info("zhuqiang - only memory is expanding")
 		// }	
