@@ -176,9 +176,9 @@ func ActivePrecompiles(rules params.Rules) []common.Address {
 	default:
 		precompiles = PrecompiledAddressesHomestead
 	}
-	if rules.IsEthStorage {
+	// if rules.IsEthStorage {
 		precompiles = append(precompiles, PrecompiledAddressesEthStorage...)
-	}
+	// }
 
 	return precompiles	
 }
